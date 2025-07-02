@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Сухарики Три Корочки</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --pfp-url: url('https://i.pinimg.com/236x/74/2e/6f/742e6f38d2e84805caa63ec1fae14aea.jpg');
+      --orange: #ff9900;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    body {
+      background: linear-gradient(45deg, #0d0d0d, #1a1a1a, #0d0d0d);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+      color: #f5f5f5;
+      font-family: 'Press Start 2P', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .container {
+      padding: 30px;
+      animation: flicker 8s infinite alternate;
+      transition: transform 0.15s ease-out;
+      transform-style: preserve-3d;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: slideInFromLeft 1.5s ease-out;
+    }
+    @keyframes slideInFromLeft {
+      0% { transform: translateX(-100px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+    .pfp {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-image: var(--pfp-url);
+      background-size: cover;
+      background-position: center;
+    }
+    .nicknames {
+      text-align: left;
+      border-left: 4px solid var(--orange);
+      padding-left: 20px;
+      animation: slideInFromRight 1.5s ease-out 0.3s both;
+    }
+    @keyframes slideInFromRight {
+      0% { transform: translateX(100px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+    .nicknames h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: var(--orange);
+      animation: textGlow 4s ease-in-out infinite;
+      transition: transform 0.3s ease;
+    }
+    .nicknames h3:hover {
+      transform: translateX(10px);
+    }
+    @keyframes textGlow {
+      0%, 100% { text-shadow: 0 0 10px var(--orange); }
+      50% { text-shadow: 0 0 20px var(--orange), 0 0 30px rgba(255, 153, 0, 0.5); }
+    }
+    .nicknames h4 {
+      font-size: 1.1rem;
+      color: #ccc;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .nicknames h4:hover {
+      color: var(--orange);
+      transform: translateX(5px);
+    }
+    .audio-controls {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: fadeInUp 1.5s ease-out 0.6s both;
+    }
+    @keyframes fadeInUp {
+      0% { transform: translateY(20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .play-pause-btn {
+      background: none;
+      border: none;
+      color: var(--orange);
+      font-size: 1.5rem;
+      cursor: pointer;
+      text-shadow: 0 0 5px var(--orange);
+      transition: all 0.3s ease;
+      animation: buttonPulse 2s ease-in-out infinite;
+    }
+    .play-pause-btn:hover {
+      transform: scale(1.2) rotate(15deg);
+      text-shadow: 0 0 15px var(--orange), 0 0 30px rgba(255, 153, 0, 0.5);
+    }
+    @keyframes buttonPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .volume-slider {
+      width: 100px;
+      accent-color: var(--orange);
+      transition: all 0.3s ease;
+    }
+    .volume-slider:hover {
+      transform: scale(1.1);
+      filter: brightness(1.2);
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: var(--orange);
+      text-shadow: 0 0 10px var(--orange);
+      animation: titleEntry 2s ease-out 0.9s both, titleGlow 3s ease-in-out infinite 2s;
+      transition: transform 0.3s ease;
+    }
+    h1:hover {
+      transform: scale(1.05) rotate(-1deg);
+    }
+    @keyframes titleEntry {
+      0% { transform: translateY(-50px) scale(0.8); opacity: 0; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    @keyframes titleGlow {
+      0%, 100% { text-shadow: 0 0 10px var(--orange); }
+      50% { text-shadow: 0 0 20px var(--orange), 0 0 40px rgba(255, 153, 0, 0.6), 0 0 60px rgba(255, 153, 0, 0.3); }
+    }
+    h2 {
+      font-size: 1rem;
+      color: #aaa;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      animation: subtitleSlide 2s ease-out 1.2s both;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    h2:hover {
+      color: var(--orange);
+      transform: scale(1.1);
+    }
+    @keyframes subtitleSlide {
+      0% { transform: translateX(-100px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+    .button {
+      display: inline-block;
+      padding: 14px 32px;
+      font-size: 1.1rem;
+      background-color: var(--orange);
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.4s ease;
+      box-shadow: 0 0 12px var(--orange);
+      margin-top: 20px;
+      font-family: 'Press Start 2P', monospace;
+      animation: buttonEntry 2s ease-out 1.5s both, buttonFloat 4s ease-in-out infinite 3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .button:hover {
+      background-color: #e67e00;
+      transform: scale(1.1) translateY(-5px);
+      box-shadow: 0 10px 30px var(--orange), 0 0 50px rgba(255, 153, 0, 0.4);
+    }
+    @keyframes buttonEntry {
+      0% { transform: translateY(50px) scale(0.8); opacity: 0; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    @keyframes buttonFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    footer {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      font-size: 0.6rem;
+      color: #444;
+      text-align: center;
+      animation: fadeIn 3s ease-out 2s both;
+      transition: color 0.3s ease;
+    }
+    footer:hover {
+      color: #666;
+    }
+    .tagline {
+      position: fixed;
+      bottom: 10px;
+      right: 15px;
+      font-size: 0.8rem;
+      color: var(--orange);
+      text-shadow: 0 0 5px var(--orange);
+      pointer-events: none;
+      animation: fadeIn 3s ease-out 2.5s both, taglineGlow 5s ease-in-out infinite 4s;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes taglineGlow {
+      0%, 100% { text-shadow: 0 0 5px var(--orange); }
+      50% { text-shadow: 0 0 15px var(--orange), 0 0 25px rgba(255, 153, 0, 0.5); }
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(13, 13, 13, 0.95);
+      backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      cursor: pointer;
+      transition: all 0.8s ease-out;
+      animation: overlayEntry 1s ease-out;
+    }
+    @keyframes overlayEntry {
+      0% { opacity: 0; backdrop-filter: blur(0px); }
+      100% { opacity: 1; backdrop-filter: blur(15px); }
+    }
+    .overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+      backdrop-filter: blur(0px);
+    }
+    .click-text {
+      font-size: 1.5rem;
+      color: var(--orange);
+      text-shadow: 0 0 15px var(--orange);
+      animation: clickTextPulse 2s ease-in-out infinite, clickTextFloat 4s ease-in-out infinite;
+      text-align: center;
+      line-height: 1.5;
+      transition: transform 0.3s ease;
+    }
+    .click-text:hover {
+      transform: scale(1.1);
+    }
+    @keyframes clickTextPulse {
+      0%, 100% { opacity: 1; text-shadow: 0 0 15px var(--orange); }
+      50% { opacity: 0.7; text-shadow: 0 0 30px var(--orange), 0 0 50px rgba(255, 153, 0, 0.5); }
+    }
+    @keyframes clickTextFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      10% { opacity: 0.95; }
+      20% { opacity: 0.85; }
+      30% { opacity: 1; }
+      40% { opacity: 0.9; }
+      50% { opacity: 1; }
+      60% { opacity: 0.95; }
+      70% { opacity: 1; }
+      80% { opacity: 1; }
+      90% { opacity: 0.9; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay">
+    <div class="click-text">
+      CLICK TO CONTINUE<br>
+      <span style="font-size: 0.8rem; opacity: 0.7;">нажми чтобы продолжить</span>
+    </div>
+  </div>
+  <div class="container">
+    <div class="profile">
+      <div class="pfp"></div>
+      <div class="nicknames">
+        <h3>сабака взрывака</h3>
+        <h4>sneakyfreakybosinn</h4>
+        <div class="audio-controls">
+          <button class="play-pause-btn" onclick="togglePlay()">⏸️</button>
+          <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="0.5" oninput="setVolume(this.value)">
+        </div>
+      </div>
+    </div>
+    <h1>СУХАРИКИ ТРИ КОРОЧКИ</h1>
+    <h2>reject humanity, stay soy</h2>
+    <a href="https://fakecrime.bio/bloodthirsty" class="button" target="_blank">Fakecrime</a>
+  </div>
+  <audio id="background-music" loop>
+    <source src="https://files.catbox.moe/75zrgj.mp3" type="audio/mpeg">
+  </audio>
+  <footer>
+    made with 💀 by gottaped
+  </footer>
+  <div class="tagline">
+    захвачено @superdurable
+  </div>
+  <script>
+    const audio = document.getElementById('background-music');
+    const playPauseBtn = document.querySelector('.play-pause-btn');
+    const overlay = document.getElementById('overlay');
+    const container = document.querySelector('.container');
+    let isPlaying = false;
+
+    document.addEventListener('mousemove', function(e) {
+      if (!overlay.classList.contains('hidden')) return;
+      const rect = document.body.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const mouseX = e.clientX - centerX;
+      const mouseY = e.clientY - centerY;
+      const maxTilt = 15;
+      const tiltX = (mouseY / centerY) * -maxTilt;
+      const tiltY = (mouseX / centerX) * maxTilt;
+      container.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(20px)`;
+    });
+
+    document.addEventListener('mouseleave', function() {
+      container.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    });
+
+    overlay.addEventListener('click', function() {
+      overlay.classList.add('hidden');
+      audio.play().then(() => {
+        playPauseBtn.textContent = '⏸️';
+        isPlaying = true;
+      }).catch(() => {
+        playPauseBtn.textContent = '▶';
+        isPlaying = false;
+      });
+    });
+
+    function togglePlay() {
+      if (isPlaying) {
+        audio.pause();
+        playPauseBtn.textContent = '▶️';
+      } else {
+        audio.play();
+        playPauseBtn.textContent = '⏸️';
+      }
+      isPlaying = !isPlaying;
+    }
+
+    function setVolume(value) {
+      audio.volume = value;
+    }
+  </script>
+</body>
+</html>
