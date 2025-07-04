@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>taped.dll</title>
+  <title>⚡taped.dll bio⚡</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
   <style>
@@ -53,6 +53,70 @@
       height: 100vh;
       image-rendering: pixelated;
       overflow: hidden;
+    }
+    
+    /* Click to reveal overlay */
+    .click-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      cursor: pointer;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    
+    .click-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .click-message {
+      text-align: center;
+      color: var(--highlight);
+      font-size: 24px;
+      text-shadow: 
+        1px 1px 0 black,
+        0 0 20px var(--highlight);
+      animation: clickPulse 2s ease-in-out infinite;
+    }
+    
+    .click-subtitle {
+      font-size: 14px;
+      color: #ccc;
+      margin-top: 20px;
+      text-shadow: 1px 1px 0 black;
+      animation: subtitleFade 3s ease-in-out infinite alternate;
+    }
+    
+    @keyframes clickPulse {
+      0%, 100% { 
+        transform: scale(1); 
+        text-shadow: 1px 1px 0 black, 0 0 20px var(--highlight);
+      }
+      50% { 
+        transform: scale(1.05); 
+        text-shadow: 1px 1px 0 black, 0 0 30px var(--highlight), 0 0 40px var(--highlight);
+      }
+    }
+    
+    /* Main content - initially hidden */
+    .main-content {
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 1s ease, transform 1s ease;
+      pointer-events: none;
+    }
+    
+    .main-content.revealed {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
     }
     
     /* Particle background */
@@ -346,38 +410,52 @@
         padding: 6px 16px;
         font-size: 12px;
       }
+      
+      .click-message {
+        font-size: 18px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="particles"></div>
-  <div class="scanlines"></div>
+  <!-- Click to reveal overlay -->
+  <div class="click-overlay" id="clickOverlay">
+    <div>
+      <div class="click-message">⚡CLICK TO CONTINUE⚡</div>
+    </div>
+  </div>
   
-  <div class="gui">
-    <div class="avatar"></div>
-    <h1>taped</h1>
-    <h2>@taped.dll</h2>
+  <!-- Main content -->
+  <div class="main-content" id="mainContent">
+    <div class="particles"></div>
+    <div class="scanlines"></div>
     
-    <div class="info-section">
-      <div class="location">📍 Osaka</div>
-      <div class="skills">
-        <div class="skill-category">Languages:</div>
-        <div class="skill-tags">
-          <span class="skill-tag">C++</span>
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">HTML</span>
-          <span class="skill-tag">CSS</span>
-        </div>
-        <div class="skill-category">Tools:</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Visual Studio</span>
-          <span class="skill-tag">Notepad++</span>
+    <div class="gui">
+      <div class="avatar"></div>
+      <h1>taped</h1>
+      <h2>@taped.dll</h2>
+      
+      <div class="info-section">
+        <div class="location">📍 Osaka</div>
+        <div class="skills">
+          <div class="skill-category">Languages:</div>
+          <div class="skill-tags">
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">HTML</span>
+            <span class="skill-tag">CSS</span>
+          </div>
+          <div class="skill-category">Tools:</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Visual Studio</span>
+            <span class="skill-tag">Notepad++</span>
+          </div>
         </div>
       </div>
+      
+      <a href="https://fakecrime.bio/q" class="button" target="_blank">⚡fakecrime⚡</a>
+      <div class="footer">taped.dll made it</div>
     </div>
-    
-    <a href="https://fakecrime.bio/q" class="button" target="_blank">⚡fakecrime⚡</a>
-    <div class="footer">taped.dll made it</div>
   </div>
   
   <audio id="bg-music" loop>
@@ -385,6 +463,29 @@
   </audio>
   
   <script>
+    // Click to reveal functionality
+    const clickOverlay = document.getElementById('clickOverlay');
+    const mainContent = document.getElementById('mainContent');
+    let isRevealed = false;
+    
+    function revealContent() {
+      if (!isRevealed) {
+        isRevealed = true;
+        clickOverlay.classList.add('hidden');
+        
+        // Small delay to ensure overlay starts hiding
+        setTimeout(() => {
+          mainContent.classList.add('revealed');
+          initializeParticles();
+          updateParallax();
+        }, 100);
+      }
+    }
+    
+    // Event listeners for reveal
+    clickOverlay.addEventListener('click', revealContent);
+    document.addEventListener('keydown', revealContent);
+    
     // Create floating particles
     function createParticles() {
       const particlesContainer = document.querySelector('.particles');
@@ -399,8 +500,10 @@
       }
     }
     
-    // Initialize particles
-    createParticles();
+    // Initialize particles (called after reveal)
+    function initializeParticles() {
+      createParticles();
+    }
     
     // Add mouse tracking effect
     let mouseX = 0;
@@ -413,6 +516,8 @@
     
     // Subtle parallax effect
     function updateParallax() {
+      if (!isRevealed) return;
+      
       const gui = document.querySelector('.gui');
       const centerX = window.innerWidth / 2;
       const centerY = window.innerHeight / 2;
@@ -424,8 +529,6 @@
       
       requestAnimationFrame(updateParallax);
     }
-    
-    updateParallax();
   </script>
 </body>
 </html>
